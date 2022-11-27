@@ -45,6 +45,8 @@ public class DemoUserStorageProvider
 
     // TODO catch the results avoid multiple calls
 
+    // for demo simplification, the search will return all the users
+
     @Override
     public List<UserModel> getUsers(RealmModel realm) {
         Set<ExternalUser> externalUsers = ExternalUsersServiceClient.getUsers();
@@ -53,52 +55,44 @@ public class DemoUserStorageProvider
 
     @Override
     public List<UserModel> getUsers(RealmModel realm, int firstResult, int maxResults) {
-        Set<ExternalUser> externalUsers = ExternalUsersServiceClient.getUsers();
-        return externalUsers.stream().collect(Collectors.toList()).subList(firstResult, maxResults).stream()
-                .map(e -> this.userModelMapper(e, realm)).collect(Collectors.toList());
+        return getUsers(realm);
     }
 
     @Override
     public List<UserModel> searchForUser(String search, RealmModel realm) {
-        // TODO Auto-generated method stub
-        return Collections.emptyList();
+        return getUsers(realm);
     }
 
     @Override
     public List<UserModel> searchForUser(String search, RealmModel realm, int firstResult, int maxResults) {
-        // TODO Auto-generated method stub
-        return Collections.emptyList();
+        return searchForUser(search, realm);
     }
 
     @Override
     public List<UserModel> searchForUser(Map<String, String> params, RealmModel realm) {
-        // TODO Auto-generated method stub
-        return Collections.emptyList();
+        // ignore params
+        return searchForUser(params, realm, 0, Integer.MAX_VALUE);
     }
 
     @Override
     public List<UserModel> searchForUser(Map<String, String> params, RealmModel realm, int firstResult,
             int maxResults) {
-        // TODO Auto-generated method stub
-        return null;
+        return getUsers(realm, firstResult, maxResults);
     }
 
     @Override
     public List<UserModel> getGroupMembers(RealmModel realm, GroupModel group) {
-        // TODO Auto-generated method stub
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<UserModel> getGroupMembers(RealmModel realm, GroupModel group, int firstResult, int maxResults) {
-        // TODO Auto-generated method stub
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<UserModel> searchForUserByUserAttribute(String attrName, String attrValue, RealmModel realm) {
-        // TODO Auto-generated method stub
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -160,7 +154,8 @@ public class DemoUserStorageProvider
     //
 
     private UserModel userModelMapper(ExternalUser externalUser, RealmModel realmModel) {
-        return new UserBuilder(keycloakSession, realmModel, componentModel, externalUser.getUsername(), externalUser.getExternalId())
+        return new UserBuilder(keycloakSession, realmModel, componentModel, externalUser.getUsername(),
+                externalUser.getExternalId())
                 .setEmail(externalUser.getEmail())
                 .setFirstName(externalUser.getFirstName())
                 .setLastName(externalUser.getLastName())
