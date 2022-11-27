@@ -1,0 +1,1 @@
+# keycloak-rhsso-user-storage-spi-demo
