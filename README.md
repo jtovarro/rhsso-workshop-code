@@ -1,3 +1,3 @@
-# keycloak-rhsso-user-storage-spi-demo
+# rhsso-workshop-code
 
 RH-SSO 7.6
