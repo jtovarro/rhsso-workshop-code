@@ -1,5 +1,6 @@
 package com.olleb;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.ws.rs.client.ClientBuilder;
@@ -14,7 +15,11 @@ import javax.ws.rs.core.GenericType;
  */
 public class ExternalUsersServiceClient {
 
-    private static final String REST_TARGET_URL = "http://localhost:8081/api/v1/users";
+    // no injection
+    private static final String TARGET_HOST = Optional
+            .ofNullable(System.getenv("TARGET_HOST"))
+            .orElse("localhost:8081");
+    private static final String TARGET_ENDPOINT = "http://" + TARGET_HOST + "/api/v1/users";
 
     private ExternalUsersServiceClient() {
     }
@@ -22,11 +27,11 @@ public class ExternalUsersServiceClient {
     public static Set<ExternalUser> getUsers() {
         GenericType<Set<ExternalUser>> externalUsersListType = new GenericType<>() {
         };
-        return ClientBuilder.newClient().target(REST_TARGET_URL).request().get(externalUsersListType);
+        return ClientBuilder.newClient().target(TARGET_ENDPOINT).request().get(externalUsersListType);
     }
 
     public static ExternalUser getUserById(String id) {
-        return ClientBuilder.newClient().target(REST_TARGET_URL).path("{id}").resolveTemplate("id", id).request()
+        return ClientBuilder.newClient().target(TARGET_ENDPOINT).path("{id}").resolveTemplate("id", id).request()
                 .get(ExternalUser.class);
     }
 
