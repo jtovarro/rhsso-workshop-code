@@ -17,7 +17,7 @@ public class ExternalUsersServiceClient {
 
     // no injection
     private static final String TARGET_HOST = Optional
-            .ofNullable(System.getenv("TARGET_HOST"))
+            .ofNullable(System.getenv("USER_STORAGE_CUSTOM_SPI_TARGET_HOST"))
             .orElse("localhost:8081");
     private static final String TARGET_ENDPOINT = "http://" + TARGET_HOST + "/api/v1/users";
 
