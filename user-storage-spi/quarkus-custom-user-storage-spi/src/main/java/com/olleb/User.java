@@ -5,6 +5,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.storage.adapter.AbstractUserAdapter;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 public class User extends AbstractUserAdapter {
 
     private final String username;

@@ -10,6 +10,9 @@ import javax.enterprise.context.ApplicationScoped;
 import com.olleb.model.User;
 import com.olleb.model.User.UserBuilder;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 @ApplicationScoped
 public class UserService {
 

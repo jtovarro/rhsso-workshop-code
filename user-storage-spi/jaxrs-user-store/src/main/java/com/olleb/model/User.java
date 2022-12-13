@@ -1,5 +1,8 @@
 package com.olleb.model;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 public class User {
 
     private final String userId;

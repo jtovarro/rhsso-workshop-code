@@ -24,6 +24,10 @@ import org.keycloak.storage.user.UserQueryProvider;
 
 import com.olleb.User.UserBuilder;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
+
 // https://www.keycloak.org/docs/18.0/server_development/index.html#_provider_capability_interfaces
 public class DemoUserStorageProvider
         implements UserStorageProvider, UserLookupProvider, UserQueryProvider, CredentialInputValidator {

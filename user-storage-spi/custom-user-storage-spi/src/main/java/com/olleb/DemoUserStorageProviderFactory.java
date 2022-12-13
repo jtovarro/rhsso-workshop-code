@@ -4,6 +4,9 @@ import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.storage.UserStorageProviderFactory;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 public class DemoUserStorageProviderFactory implements UserStorageProviderFactory<DemoUserStorageProvider> {
 
     @Override

@@ -3,6 +3,9 @@ package com.olleb;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExternalUser {
 

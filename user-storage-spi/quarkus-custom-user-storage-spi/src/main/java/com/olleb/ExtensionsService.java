@@ -11,7 +11,9 @@ import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
-
+/**
+ * @author Àngel Ollé Blázquez
+ */
 @ApplicationScoped
 @RegisterRestClient(configKey = "com.olleb.extensions.api")
 @ClientHeaderParam(name = "Authorization", value = "{token}")

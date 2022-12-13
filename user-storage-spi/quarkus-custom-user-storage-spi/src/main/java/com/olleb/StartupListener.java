@@ -12,6 +12,9 @@ import org.jboss.logging.Logger;
 
 import io.quarkus.runtime.StartupEvent;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 @ApplicationScoped
 public class StartupListener {
 

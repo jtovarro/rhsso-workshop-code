@@ -1,5 +1,8 @@
 package com.olleb;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 public class ExternalUser {
 
     private String externalId;

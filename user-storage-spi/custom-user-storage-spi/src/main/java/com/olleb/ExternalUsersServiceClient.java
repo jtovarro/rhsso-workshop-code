@@ -13,6 +13,10 @@ import javax.ws.rs.core.GenericType;
  * provider)
  * no use of RestClient EAP XP/Microprofile
  */
+
+/**
+ * @author Àngel Ollé Blázquez
+ */
 public class ExternalUsersServiceClient {
 
     // no injection

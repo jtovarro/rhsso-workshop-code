@@ -18,6 +18,9 @@ import com.olleb.service.UserService;
 
 import io.smallrye.common.constraint.NotNull;
 
+/**
+ * @author Àngel Ollé Blázquez
+ */
 @Path("api/v1/users")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
