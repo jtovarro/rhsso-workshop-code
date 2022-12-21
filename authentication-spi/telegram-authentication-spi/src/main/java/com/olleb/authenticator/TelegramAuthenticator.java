@@ -24,36 +24,27 @@ public class TelegramAuthenticator implements Authenticator {
 
     private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 
-    private static final String REQUIRED_ACTION = "telegram-otp-required-action";
-    private static final String TEMPLATE = "telegram-otp.ftl";
-    private static final String TELEGRAM_ID_ATTRIBUTE = "telegram_id";
-    private static final String TELEGRAM_MSG_PROPERTY_DESC = "telegram-otp-desc";
-
-    @Override
-    public void close() {
-        //
-    }
-
     @Override
     public void authenticate(AuthenticationFlowContext context) {
         Map<String, String> config = context.getAuthenticatorConfig().getConfig();
         KeycloakSession keycloakSession = context.getSession();
 
-        String id = context.getUser().getFirstAttribute(TELEGRAM_ID_ATTRIBUTE);
+        String id = context.getUser().getFirstAttribute(TelegramAuthenticatorConstants.TELEGRAM_ID_ATTRIBUTE);
 
         try {
-            int length = Integer.parseInt(config.get("length"));
+            int length = Integer.parseInt(config.get(TelegramAuthenticatorConstants.LC_NAME));
             String code = SecretGenerator.getInstance().randomString(length, SecretGenerator.DIGITS);
 
             // EN only for this demo
             Theme theme = keycloakSession.theme().getTheme(Theme.Type.LOGIN);
-            String msg = theme.getMessages(Locale.ENGLISH).getProperty(TELEGRAM_MSG_PROPERTY_DESC);
+            String msg = theme.getMessages(Locale.ENGLISH)
+                    .getProperty(TelegramAuthenticatorConstants.TELEGRAM_MSG_PROPERTY_DESC);
 
             msg = String.format(msg, code);
 
             TelegramService.getInstance().send(id, msg);
 
-            Response response = context.form().createForm(TEMPLATE);
+            Response response = context.form().createForm(TelegramAuthenticatorConstants.TEMPLATE);
             context.challenge(response);
 
         } catch (Exception e) {
@@ -74,13 +65,17 @@ public class TelegramAuthenticator implements Authenticator {
 
     @Override
     public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        String id = user.getFirstAttribute(TELEGRAM_ID_ATTRIBUTE);
+        String id = user.getFirstAttribute(TelegramAuthenticatorConstants.TELEGRAM_ID_ATTRIBUTE);
         return !(id == null || id.isBlank());
     }
 
     @Override
     public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        user.addRequiredAction(REQUIRED_ACTION);
+        user.addRequiredAction(TelegramAuthenticatorConstants.REQUIRED_ACTION);
     }
 
+    @Override
+    public void close() {
+        // no-op
+    }
 }

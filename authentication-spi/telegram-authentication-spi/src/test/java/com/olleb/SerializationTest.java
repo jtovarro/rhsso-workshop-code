@@ -23,7 +23,6 @@ public class SerializationTest {
     @Test
     public void testJsonNodeToTelegramMessageList() throws JsonParseException, JsonProcessingException, IOException {
         JsonNode jsonNode = mapper.readTree(mapper.getFactory().createParser(json));
-        System.out.println(jsonNode);
         List<TelegramMessage> list = mapper.convertValue(jsonNode,
                 new TypeReference<List<TelegramMessage>>() {
                 });

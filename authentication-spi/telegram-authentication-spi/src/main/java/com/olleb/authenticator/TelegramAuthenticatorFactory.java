@@ -1,9 +1,7 @@
 package com.olleb.authenticator;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import org.jboss.logging.Logger;
 import org.keycloak.Config.Scope;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.AuthenticatorFactory;
@@ -17,19 +15,19 @@ import org.keycloak.provider.ProviderConfigProperty;
  */
 public class TelegramAuthenticatorFactory implements AuthenticatorFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
-
-    public static final String PROVIDER_ID = "telegram-authenticator";
+    private static final TelegramAuthenticator TELEGRAM_AUTHENTICATOR = new TelegramAuthenticator();
 
     private static final List<ProviderConfigProperty> configProperties;
 
     static {
         configProperties = List.of(
-                new ProviderConfigProperty("length", "Code length", "Number of digits of the security code",
-                        ProviderConfigProperty.STRING_TYPE, 6));
+                new ProviderConfigProperty(
+                        TelegramAuthenticatorConstants.LC_NAME,
+                        TelegramAuthenticatorConstants.LC_LABEL,
+                        TelegramAuthenticatorConstants.LC_HELP_TEXT,
+                        ProviderConfigProperty.STRING_TYPE,
+                        TelegramAuthenticatorConstants.LC_DEFAULT_VALUE));
     }
-
-    private static final TelegramAuthenticator TELEGRAM_AUTHENTICATOR = new TelegramAuthenticator();
 
     @Override
     public Authenticator create(KeycloakSession session) {
@@ -37,30 +35,18 @@ public class TelegramAuthenticatorFactory implements AuthenticatorFactory {
     }
 
     @Override
-    public void init(Scope config) {
-    }
-
-    @Override
-    public void postInit(KeycloakSessionFactory factory) {
-    }
-
-    @Override
-    public void close() {
-    }
-
-    @Override
     public String getId() {
-        return PROVIDER_ID;
+        return TelegramAuthenticatorConstants.PROVIDER_ID;
     }
 
     @Override
     public String getDisplayType() {
-        return "Telegram Authentication";
+        return TelegramAuthenticatorConstants.DISPLAY_TYPE;
     }
 
     @Override
     public String getReferenceCategory() {
-        return "otp";
+        return TelegramAuthenticatorConstants.REFERENCE_CATEGORY;
     }
 
     @Override
@@ -80,12 +66,27 @@ public class TelegramAuthenticatorFactory implements AuthenticatorFactory {
 
     @Override
     public String getHelpText() {
-        return "OTP Telegram authentication";
+        return TelegramAuthenticatorConstants.HELP_TEXT;
     }
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
         return configProperties;
+    }
+
+    @Override
+    public void init(Scope config) {
+        // no-op
+    }
+
+    @Override
+    public void postInit(KeycloakSessionFactory factory) {
+        // no-op
+    }
+
+    @Override
+    public void close() {
+        // no-op
     }
 
 }

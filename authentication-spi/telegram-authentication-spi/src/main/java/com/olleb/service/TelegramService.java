@@ -26,11 +26,6 @@ public class TelegramService {
 
     private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 
-    public static final String TELEGRAM_BOT_USERNAME = System.getenv("TELEGRAM_BOT_USERNAME");
-    private static final String TELEGRAM_BASE_URL = "https://api.telegram.org/bot{apitoken}";
-
-    private static final int SUBSCRIPTIONCODE_LENGTH = 10;
-
     private static TelegramService telegramService;
 
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -42,7 +37,7 @@ public class TelegramService {
 
     private static final WebTarget target = ClientBuilder
             .newClient()
-            .target(TELEGRAM_BASE_URL)
+            .target(TelegramServiceConstants.TELEGRAM_BASE_URL)
             .resolveTemplate("apitoken", System.getenv("TELEGRAM_TOKEN"));
 
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -73,7 +68,8 @@ public class TelegramService {
             }
             messages.stream().forEach(m -> {
                 if (m.getSubscriptionCode() == null) {
-                    String subscriptionCode = "S" + SecretGenerator.getInstance().randomString(SUBSCRIPTIONCODE_LENGTH,
+                    String subscriptionCode = "S" + SecretGenerator.getInstance().randomString(
+                            TelegramServiceConstants.SUBSCRIPTIONCODE_LENGTH,
                             SecretGenerator.ALPHANUM);
                     m.setSubscriptionCode(subscriptionCode);
                     target.path("sendMessage")
@@ -112,6 +108,10 @@ public class TelegramService {
             telegramService = new TelegramService();
         }
         return telegramService;
+    }
+
+    public static String getTelegramBotUsername() {
+        return TelegramServiceConstants.TELEGRAM_BOT_USERNAME;
     }
 
 }
