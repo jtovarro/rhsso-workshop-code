@@ -36,10 +36,12 @@ public class DemoUserStorageProvider
 
     private final KeycloakSession keycloakSession;
     private final ComponentModel componentModel;
+    private final ExternalUsersService service;
 
-    public DemoUserStorageProvider(KeycloakSession keycloakSession, ComponentModel componentModel) {
+    public DemoUserStorageProvider(KeycloakSession keycloakSession, ComponentModel componentModel, ExternalUsersService service) {
         this.keycloakSession = keycloakSession;
         this.componentModel = componentModel;
+        this.service = service;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class DemoUserStorageProvider
 
     @Override
     public List<UserModel> getUsers(RealmModel realm) {
-        Set<ExternalUser> externalUsers = ExternalUsersServiceClient.getUsers();
+        Set<ExternalUser> externalUsers = service.getUsers();
         return externalUsers.stream().map(e -> this.userModelMapper(e, realm)).collect(Collectors.toList());
     }
 
@@ -103,20 +105,20 @@ public class DemoUserStorageProvider
     public UserModel getUserById(String id, RealmModel realmModel) {
         // StorageId is used for referencing users that are stored outside of Keycloak
         String externalId = StorageId.externalId(id);
-        ExternalUser externalUser = ExternalUsersServiceClient.getUserById(externalId);
+        ExternalUser externalUser = service.getUserById(externalId);
         return userModelMapper(externalUser, realmModel);
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realm) {
-        Set<ExternalUser> users = ExternalUsersServiceClient.getUsers();
+        Set<ExternalUser> users = service.getUsers();
         ExternalUser externalUser = findByUsername(users, username).orElseThrow();
         return userModelMapper(externalUser, realm);
     }
 
     @Override
     public UserModel getUserByEmail(String email, RealmModel realm) {
-        Set<ExternalUser> users = ExternalUsersServiceClient.getUsers();
+        Set<ExternalUser> users = service.getUsers();
         ExternalUser externalUser = findByEmail(users, email).orElseThrow();
         return userModelMapper(externalUser, realm);
     }
@@ -137,7 +139,7 @@ public class DemoUserStorageProvider
             return false;
         }
         StorageId storageId = new StorageId(user.getId());
-        ExternalUser externalUser = ExternalUsersServiceClient.getUserById(storageId.getExternalId());
+        ExternalUser externalUser = service.getUserById(storageId.getExternalId());
         if (externalUser != null) {
             String password = externalUser.getPassword();
             return password != null && password.equals(credentialInput.getChallengeResponse());
