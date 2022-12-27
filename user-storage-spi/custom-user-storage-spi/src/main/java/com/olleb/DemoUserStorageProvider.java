@@ -139,7 +139,7 @@ public class DemoUserStorageProvider
             return false;
         }
         StorageId storageId = new StorageId(user.getId());
-        ExternalUser externalUser = service.getUserById(storageId.getExternalId());
+        final ExternalUser externalUser = service.getUserById(storageId.getExternalId());
         if (externalUser != null) {
             String password = externalUser.getPassword();
             return password != null && password.equals(credentialInput.getChallengeResponse());
