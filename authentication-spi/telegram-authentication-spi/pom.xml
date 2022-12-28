@@ -43,31 +43,19 @@
   </dependencyManagement>
 
   <dependencies>
-
-    <!-- Import the JAX-RS API, we use provided scope as the API is included
-              in JBoss EAP -->
-    <dependency>
-      <groupId>org.jboss.spec.javax.ws.rs</groupId>
-      <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-client</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jackson2-provider</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <!-- 
       Upstream note (latest upstream version). It doesn apply on this concrete example, as we are aligned with RH-SSO equivalent version.
       This functionality depends on APIs bundled in the keycloak-model-legacy module.

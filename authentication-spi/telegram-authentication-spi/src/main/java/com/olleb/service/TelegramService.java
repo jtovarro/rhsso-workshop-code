@@ -35,10 +35,11 @@ public class TelegramService {
 
     private static int lastUpdateId = 0;
 
+    // SimpleHttp or JsonSimpleHttp from keycloak can be used instead
     private static final WebTarget target = ClientBuilder
             .newClient()
             .target(TelegramServiceConstants.TELEGRAM_BASE_URL)
-            .resolveTemplate("apitoken", System.getenv("TELEGRAM_TOKEN"));
+            .resolveTemplate("apitoken", TelegramServiceConstants.TELEGRAM_TOKEN);
 
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     static {
