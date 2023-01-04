@@ -43,6 +43,7 @@ public class TelegramAuthenticator implements Authenticator {
             msg = String.format(msg, code);
 
             TelegramService.getInstance().send(id, msg);
+            context.getAuthenticationSession().setAuthNote("code", code);
 
             Response response = context.form().createForm(TelegramAuthenticatorConstants.TEMPLATE);
             context.challenge(response);
@@ -54,8 +55,16 @@ public class TelegramAuthenticator implements Authenticator {
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        // TODO
-        context.success();
+        String formCode = context.getHttpRequest().getDecodedFormParameters().getFirst("telegram_code");
+        String code = context.getAuthenticationSession().getAuthNote("code");
+
+        if (code == null) {
+            return;
+        }
+
+        if (formCode.equals(code)) {
+            context.success();
+        }
     }
 
     @Override
