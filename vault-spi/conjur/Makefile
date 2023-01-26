@@ -6,7 +6,7 @@ CONJUR_POD_NAME=conjur-pod
 # it's a demo, it's ok
 CONJUR_DATA_KEY=tnwICwIa2kOVH2KkWvpPw+VA5AagyJPtu4nEim1UwCc=
 
-.PHONY: build clean all
+.PHONY: build clean all start
 
 all: build run
 
