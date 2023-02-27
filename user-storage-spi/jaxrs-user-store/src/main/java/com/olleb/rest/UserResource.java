@@ -60,4 +60,10 @@ public class UserResource {
         return userService.getUserById(id).orElseThrow(NotFoundException::new);
     }
 
+    @GET
+    @Path("/greeting/{name}")
+    public String greeting(String name){
+        return userService.greeting(name);
+    }
+    
 }

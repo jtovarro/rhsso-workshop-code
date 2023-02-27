@@ -23,7 +23,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
-
 import com.olleb.model.User;
 import com.olleb.model.User.UserBuilder;
 
@@ -79,6 +78,10 @@ public class UserService {
 
     public Optional<User> getUserById(final String id) {
         return Optional.of(userMap.get(id));
+    }
+
+    public String greeting(String name) {
+        return "What do you fancy eating " + name + "?";
     }
 
 }
