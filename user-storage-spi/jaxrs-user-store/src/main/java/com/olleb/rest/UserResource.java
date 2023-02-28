@@ -36,7 +36,7 @@ import com.olleb.service.UserService;
 import io.smallrye.common.constraint.NotNull;
 
 /**
- * @author Àngel Ollé Blázquez
+ * @author jc
  */
 @Path("api/v1/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class UserResource {
 
     @GET
     @Path("/greeting/{name}")
-    public String greeting(String name){
+    public String greeting(@PathParam("name") String name){
         return userService.greeting(name);
     }
     

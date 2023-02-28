@@ -16,13 +16,13 @@ public class restApi {
     
     @GET
     public Response getList(){
-        Person person = new Person("john", "willian", "jw@rex.do", "private");
+        Person person = new Person("1", "john", "willian", "jw@rex.do", "private");
         return Response.ok(person).build();
     }
 
     @POST
     public Response save(PersonModel model){
-        Person person = new Person(model.firstName, model.lastName, model.email, model.password);
+        Person person = new Person(model.id, model.firstName, model.lastName, model.email, model.password);
         return Response.ok(person).build();
     }
 

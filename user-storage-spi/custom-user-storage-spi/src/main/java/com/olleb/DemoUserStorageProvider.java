@@ -48,8 +48,8 @@ import com.olleb.User.UserBuilder;
 // https://www.keycloak.org/docs/18.0/server_development/index.html#_provider_capability_interfaces
 public class DemoUserStorageProvider
         implements UserStorageProvider, UserLookupProvider, UserQueryProvider, CredentialInputValidator {
-
     private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+
 
     private final KeycloakSession keycloakSession;
     private final ComponentModel componentModel;
